@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chrome from "@sparticuz/chromium";
 import tinycolor from "tinycolor2";
 
 interface UXScore {
@@ -22,16 +23,12 @@ export async function POST(request: Request) {
     const contrastNotes: string[] = [];
     const fontSizeNotes: string[] = [];
 
-    // Launch browser with specific settings
+    // Launch browser with specific settings for Vercel
     browser = await puppeteer.launch({
-      headless: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--disable-accelerated-2d-canvas",
-        "--disable-gpu",
-      ],
+      args: chrome.args,
+      defaultViewport: chrome.defaultViewport,
+      executablePath: await chrome.executablePath(),
+      headless: chrome.headless,
     });
 
     const page = await browser.newPage();
