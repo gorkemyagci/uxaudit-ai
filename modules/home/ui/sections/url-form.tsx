@@ -70,7 +70,7 @@ export const URLForm = () => {
     try {
       setIsLoading(true);
       
-      const response = await fetch('/api/analyze', {
+      const response = await fetch('https://uxaudit-ai.vercel.app/api/analyze', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
